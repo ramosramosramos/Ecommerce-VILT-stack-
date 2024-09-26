@@ -1,0 +1,3 @@
+<template>
+    admin here
+</template>
