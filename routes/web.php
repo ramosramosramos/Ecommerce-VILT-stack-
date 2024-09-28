@@ -1,16 +1,19 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
 
 
 Route::middleware('admin')->group(fn() => [
-    Route::inertia('/admin', 'Admin/Admin')->name('admin')
+ Route::prefix('admin')->group(function(){
+        Route::resource('user', AdminController::class);
+ })
 ]);
 
 Route::middleware('auth')->group(fn() => [
-    Route::inertia('/', 'Shop/Home')->name('home'),
-    Route::inertia('user', 'Shop/User')->name('user'),
+    Route::inertia('/', 'Seller/Home')->name('home'),
+    Route::inertia('user', 'Seller/User')->name('user'),
 ]);
 Route::inertia('login', 'Auth/Login')->name('login');
 
