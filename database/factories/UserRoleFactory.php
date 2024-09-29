@@ -17,7 +17,9 @@ class UserRoleFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'user_id'=>random_int(1,150),
+            'role'=>['seller','customer'][array_rand(['seller,customer'],1)],
+            'isAuthorizedSeller'=>[false,true][array_rand([false,true])],
         ];
     }
 }

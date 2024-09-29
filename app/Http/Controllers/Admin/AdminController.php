@@ -2,16 +2,62 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Resources\Admin\AdminUserResource;
 use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\UserRole;
 
 class AdminController
 {
 
     public function index()
     {
-        return inertia('Admin/Home', []);
+        $users = User::with(['roles'])
+            ->select(
+                'id',
+                'name',
+                'email',
+                'phone',
+                'created_at',
+            )->latest()->get();
+
+        $roles = $users->flatMap(function ($user) {
+            return $user->roles->map(function ($role) {
+                return [
+                    'isAuthorizedSeller' => $role->isAuthorizedSeller,
+                ];
+            });
+        });
+        $all_counts =0;
+        $pending_counts = 0;
+        $active_counts = 0;
+
+        foreach ($roles as $role) {
+            $all_counts+=1;
+            if ($role['isAuthorizedSeller'] == false) {
+                $pending_counts += 1;
+            } else {
+                $active_counts += 1;
+            }
+
+
+        }
+
+
+
+
+
+
+        return inertia('Admin/Home', [
+            'users' => AdminUserResource::collection($users),
+
+              'counts'=>[
+                'pending_counts' => $pending_counts,
+                'active_counts'=>$active_counts,
+                'roles_counts'=>$all_counts,
+            ],
+        ]);
     }
 
     public function create()

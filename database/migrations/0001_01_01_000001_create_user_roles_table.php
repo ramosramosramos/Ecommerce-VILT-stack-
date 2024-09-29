@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->string('role')->nullable()->default('customer');
-            $table->string('isAuthorizedSeller')->nullable()->default(false);
+            $table->boolean('isAuthorizedSeller')->default(false);
             $table->softDeletes();
             $table->timestamps();
         });
