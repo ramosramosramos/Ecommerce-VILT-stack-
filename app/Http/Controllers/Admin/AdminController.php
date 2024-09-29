@@ -11,7 +11,7 @@ class AdminController
 
     public function index()
     {
-
+        return inertia('Admin/Home', []);
     }
 
     public function create()
