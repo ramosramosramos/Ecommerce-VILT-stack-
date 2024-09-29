@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('admin')->group(fn() => [
  Route::prefix('admin')->group(function(){
-        Route::resource('user', AdminController::class);
+        Route::resource('users', AdminController::class);
  })
 ]);
 
