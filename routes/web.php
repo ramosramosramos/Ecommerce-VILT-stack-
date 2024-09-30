@@ -6,10 +6,11 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::middleware('admin')->group(fn() => [
- Route::prefix('admin')->group(function(){
-        Route::resource('admins', AdminController::class);
- })
+
 ]);
+Route::prefix('admin')->group(function(){
+    Route::resource('admins', AdminController::class);
+});
 
 Route::middleware('auth')->group(fn() => [
     Route::inertia('/', 'Seller/Home')->name('home'),

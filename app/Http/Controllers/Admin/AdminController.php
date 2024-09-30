@@ -6,57 +6,20 @@ use App\Http\Resources\Admin\AdminUserResource;
 use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use App\Models\UserRole;
+use App\Services\Admin\AdminService;
+use App\Services\Admin\CalculatorService;
 
 class AdminController
 {
-
-    public function index()
+    // get users by admin and counts
+    public function index(AdminService $adminService, CalculatorService $calculatorService)
     {
-        $users = User::with(['roles'])
-            ->select(
-                'id',
-                'name',
-                'email',
-                'phone',
-                'created_at',
-            )->latest()->get();
-
-        $roles = $users->flatMap(function ($user) {
-            return $user->roles->map(function ($role) {
-                return [
-                    'isAuthorizedSeller' => $role->isAuthorizedSeller,
-                ];
-            });
-        });
-        $all_counts =0;
-        $pending_counts = 0;
-        $active_counts = 0;
-
-        foreach ($roles as $role) {
-            $all_counts+=1;
-            if ($role['isAuthorizedSeller'] == false) {
-                $pending_counts += 1;
-            } else {
-                $active_counts += 1;
-            }
-
-
-        }
-
-
-
-
-
-
+        $users = $adminService->getUsers();
+        ///calculator uses flatmap and forloops
+        $totals = $calculatorService->getRoleCounts($users);
         return inertia('Admin/Home', [
             'users' => AdminUserResource::collection($users),
-
-              'counts'=>[
-                'pending_counts' => $pending_counts,
-                'active_counts'=>$active_counts,
-                'roles_counts'=>$all_counts,
-            ],
+            'counts' => $totals,
         ]);
     }
 
