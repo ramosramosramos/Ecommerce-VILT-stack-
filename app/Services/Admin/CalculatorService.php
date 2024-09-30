@@ -21,6 +21,7 @@ class CalculatorService
         $pending_counts = 0;
         $active_counts = 0;
 
+        
         foreach ($roles as $role) {
             $all_counts += 1;
             if ($role['isAuthorizedSeller'] == false) {
