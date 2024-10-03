@@ -13,7 +13,8 @@ Route::middleware('auth')->group(fn() => [
 
     Route::middleware('admin', )->group(fn() => [
         Route::prefix('admin')->group(function () {
-            Route::resource('admins', AdminController::class);
+            Route::resource('admins', AdminController::class)->except(['update']);
+            Route::post('admins/{role}/update',[AdminController::class,'update'])->name('admins.update');
         }),
     ]),
 

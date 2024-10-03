@@ -6,6 +6,7 @@ use App\Http\Resources\Admin\AdminUserResource;
 use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\UserRole;
 use App\Services\Admin\AdminService;
 use App\Services\Admin\CalculatorService;
 
@@ -23,9 +24,10 @@ class AdminController
         ]);
     }
 
+
     public function create()
     {
-        //
+
     }
 
     /**
@@ -55,9 +57,15 @@ class AdminController
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UserRole $role)
     {
-        //
+        $authorize = $role->isAuthorizedSeller ? false : true;
+        $role->update([
+            'isAuthorizedSeller' => $authorize
+        ]);
+        return redirect()->back();
+
+
     }
 
     /**

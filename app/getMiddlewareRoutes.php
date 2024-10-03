@@ -25,6 +25,7 @@ trait getMiddlewareRoutes
     public function check(Request $request, Closure $next, $role = "customer")
     {
         $user = Auth::user();
+        
 
 
         if ($user->roles->contains('role', 'customer')) {

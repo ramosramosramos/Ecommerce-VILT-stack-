@@ -17,13 +17,15 @@
                 <td class="border-[1px] ">
                     <span v-for="role in user.roles" :key="role.id" class="grid m-1 ">{{ role.role }}</span>
                 </td>
-                <td class="grid ">
-                    <button v-for="role in user.roles" :key="role.id" :class="['block m-1 w-auto px-1 rounded-sm ',
-                        { ' bg-red-500 m-1 px-1 rounded-sm text-gray-300': role.isAuthorizedSeller == 'Pending' },
-                        { ' bg-green-500 m-1 px-1 rounded-sm text-gray-100': role.isAuthorizedSeller == 'Active' },
+                <td >
+                    <Link  as="button"
+                     v-for="role in user.roles" :key="role.id"
+                     method="post" :href="route('admins.update',role.id)" :class="['block  m-auto w-auto px-1 rounded-sm ',
+                        { ' bg-red-500 px-1 rounded-sm text-gray-300': role.isAuthorizedSeller == 'Pending' },
+                        { ' bg-green-500  px-1 rounded-sm text-gray-100': role.isAuthorizedSeller == 'Active' },
                     ]">
                         {{ role.isAuthorizedSeller }}
-                    </button>
+                    </Link>
                 </td>
 
                 <td class="border-[1px] ">{{ user.created_at }}</td>
@@ -32,6 +34,8 @@
     </table>
 </template>
 <script setup>
+import { Link } from '@inertiajs/vue3';
+
 const props = defineProps({
     users: Object
 })
