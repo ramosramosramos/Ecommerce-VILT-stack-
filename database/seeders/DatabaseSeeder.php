@@ -16,8 +16,6 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-        User::factory(150)->create();
-        UserRole::factory(150)->create();
 
 
         User::factory()->create([
@@ -44,20 +42,22 @@ class DatabaseSeeder extends Seeder
         ]);
 
         UserRole::create([
-            'user_id'=>'1',
-            'role'=>'admin',
-            'isAuthorizedSeller'=>false,
+            'user_id' => '1',
+            'role' => 'admin',
+            'isAuthorizedSeller' => false,
         ]);
         UserRole::create([
-            'user_id'=>'2',
-            'role'=>'seller',
-            'isAuthorizedSeller'=>false,
+            'user_id' => '2',
+            'role' => 'seller',
+            'isAuthorizedSeller' => false,
 
         ]);
         UserRole::create([
-            'user_id'=>'3',
-            'role'=>'customer',
-            'isAuthorizedSeller'=>false,
+            'user_id' => '3',
+            'role' => 'customer',
+            'isAuthorizedSeller' => false,
         ]);
+        User::factory(150)->create();
+        UserRole::factory(150)->create();
     }
 }

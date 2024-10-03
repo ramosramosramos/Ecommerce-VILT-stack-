@@ -1,5 +1,5 @@
 <template>
 <div class="min-h-[100vh]:">
-   <h1> user here</h1>
+   <h1> Hello Customer</h1>
 </div>
 </template>

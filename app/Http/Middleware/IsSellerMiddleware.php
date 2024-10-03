@@ -2,14 +2,13 @@
 
 namespace App\Http\Middleware;
 
-
 use App\getMiddlewareRoutes;
+use Illuminate\Support\Facades\Auth;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class IsAdminMiddleware
+class IsSellerMiddleware
 {
     use getMiddlewareRoutes;
     /**
@@ -19,8 +18,11 @@ class IsAdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+
         if (Auth::check()) {
-            return $this->check($request, $next, "admin");
+
+            return $this->check($request,$next,"seller");
+
         }
         return redirect()->back()->with('allowed', 'You are not allowed to this page');
     }

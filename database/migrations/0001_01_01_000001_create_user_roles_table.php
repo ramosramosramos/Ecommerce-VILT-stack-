@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('user_roles', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(User::class)->unique()->constrained()->cascadeOnDelete();
             $table->string('role')->nullable()->default('customer');
             $table->boolean('isAuthorizedSeller')->default(false);
             $table->softDeletes();
